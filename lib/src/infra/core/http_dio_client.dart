@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_chatgpt/src/core/http_client.dart';
+import 'package:flutter_chatgpt/src/main/factory/httpclient_factory.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class HttpDioClient implements HttpClient<dynamic, Response, Options> {
   late Dio api = Dio();
-  HttpDioClient({String urlServer = ''}) {
+  String urlServer;
+  HttpDioClient({this.urlServer = ''}) {
     instanceDio(urlServer);
     addInterceptors();
   }
@@ -35,13 +37,14 @@ class HttpDioClient implements HttpClient<dynamic, Response, Options> {
     return api.get(url, queryParameters: queryParameters, options: options);
   }
 
+  @override
   Future<Response> post(String url,
       {Map<String, dynamic>? data,
       List<Map<String, dynamic>>? arrayData,
       FormData? multiPartData,
       Options? options,
       bool useCache = false}) {
-    return api.post(url,
+    return api.post(urlServer,
         data: data ?? multiPartData ?? arrayData, options: options);
   }
 

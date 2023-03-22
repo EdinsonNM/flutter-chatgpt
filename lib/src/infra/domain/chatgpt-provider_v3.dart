@@ -20,7 +20,7 @@ class ChatgptProviderV3 implements ChatgptProvider {
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
-          'authorization': 'Bearer $this.keyToken'
+          'Authorization': 'Bearer $keyToken'
         }));
   }
 }
