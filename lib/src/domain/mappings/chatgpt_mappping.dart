@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class ChatgptMapping {
@@ -26,5 +25,9 @@ class ChatgptMapping {
         id: randomString(),
         text: message);
     return textMessage;
+  }
+
+  String getContentFromResponse(dynamic response){
+    return (response.data['choices'] as List)[0]['message']['content'];
   }
 }

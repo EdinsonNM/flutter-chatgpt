@@ -12,12 +12,9 @@ class ChatgptRepository {
     return Stream<String>.value(message)
         .asyncMap((event) => chatProvider.request(message))
         .doOnData(print)
-        .map((response){
-
-return (response.data['choices'] as List)[0]['message']['content'] as String;
-        })
+        .map(chatgptMapping.getContentFromResponse)
         .map(chatgptMapping.createSystemMessage)
-        .handleError((e) => chatgptMapping.createSystemMessage("Ocurrio un error"))
-        ;
+        .handleError(
+            (e) => chatgptMapping.createSystemMessage("Ocurrio un error"));
   }
 }
